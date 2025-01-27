@@ -13,7 +13,7 @@ def homepage():
 
     if formlogin.validate_on_submit():
         usuario = Usuario.query.filter_by(email=formlogin.email.data).first() # buscando no banco de dados se tem um email igual ao inserido no formulario
-        if usuario and bcrypt.check_password_hash(usuario.senha, formlogin.senha.data):
+        if usuario and bcrypt.check_password_hash(usuario.senha.encode("utf-8"), formlogin.senha.data):
             login_user(usuario)  
             return redirect(url_for("perfil", id_usuario=usuario.id))   
     return render_template("homepage.html", form=formlogin)
@@ -24,7 +24,7 @@ def criar_conta():
     form_criarconta = FormCriarConta()
 
     if form_criarconta.validate_on_submit():  #essa condição só vai rodar se o usuario clicar no botao, e se o clique dele está valido
-        senha = bcrypt.generate_password_hash(form_criarconta.senha.data) # criptografar senha do usuario
+        senha = bcrypt.generate_password_hash(form_criarconta.senha.data).decode("utf-8") # criptografar senha do usuario
         usuario = Usuario(nome=form_criarconta.nome.data,
                         email=form_criarconta.email.data,
                         senha=senha)
