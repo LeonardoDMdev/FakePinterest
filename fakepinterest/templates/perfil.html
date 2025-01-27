@@ -1,0 +1,60 @@
+{% extends "homepage.html" %}
+
+{% block titulo %} 
+Perfil {{usuario}}
+{% endblock %}
+
+{% block body %}
+<body>
+{% include "navbar.html" %}
+
+{% if form %}
+    <div class="container">
+
+        <form class="bloco-add-img" method="post" enctype="multipart/form-data"> <!--como é um formulário de arquivo, ele precisa ter outro parâmetro-->
+            {{ form.csrf_token }} <!--manter a segurança do formulário-->
+          <h2>Enviar foto</h2>
+
+          <div class="bloco-arquivo">
+            <label for="foto" class="botao-arquivo">
+              Escolher arquivo
+              {{ form.foto(class="input-arquivo", id="foto") }}
+            </label>
+            <span id="imagem-arquivo" class=""></span>
+          </div>
+
+          {{ form.botao_confirm(class="botao-login") }}
+        </form>
+    </div>
+{% else %}
+<div class="bloco-add-img">
+    <h2>Perfil - {{ usuario.nome }}</h2>
+</div>
+{% endif %}
+
+
+<div class="conteudo">
+  {% for foto in usuario.fotos %}
+    <div class="bloco-imagem">
+      <a href="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}" download class="download-button">
+        Baixar img
+      </a>
+      <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
+    </div>
+  {% endfor %}
+</div>
+
+  <script>
+    let input = document.getElementById("foto");
+    let imagemArquivo = document.getElementById("imagem-arquivo");
+
+    input.addEventListener("change", () => {
+      let inputImagem = document.querySelector("input[type=file]").files[0];
+
+      imagemArquivo.classList.add("visivel");
+      imagemArquivo.innerText = inputImagem.name;
+    });
+  </script>
+
+</body>
+{% endblock %}
