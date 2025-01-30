@@ -4,4 +4,5 @@ você armazena o hash da senha. Isso garante que, mesmo que o banco de dados sej
 CSRF é um tipo de ataque. No contexto de formulários web, o ataque pode acontecer quando um usuário com sessão ativa envia um formulário malicioso para realizar ações no sistema, 
 como mudar configurações ou realizar compras.
 Para prevenir ataques CSRF, é recomendado o uso de tokens CSRF. Em Flask, você pode usar a extensão Flask-WTF, que integra o gerenciamento de formulários com proteção CSRF.
+OBS: quando o site fica inativo, ele apaga as fotos, para isso não acontecer teria que usar uma versão paga.
 site: https://fakepinterest-94da.onrender.com
